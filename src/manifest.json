@@ -4,7 +4,7 @@
 	"name": "AirChat 0.1.0 Alpha",
 	"app": {
 		"background": {
-			"scripts": ["main.js"]
+			"scripts": ["js/main.js"]
 		}
 	},
 	"permissions": [{
@@ -18,5 +18,6 @@
 			"udp-bind::5559",
 			"udp-send-to::5559"
 		]
-	}]
+	}],
+	"icons": { "16": "media/calculator-16.png", "128": "media/calculator-128.png" }
 }
