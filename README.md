@@ -1,4 +1,4 @@
 AirChat
 =======
 
-LAN-based chat client
+LAN-based chat client.
