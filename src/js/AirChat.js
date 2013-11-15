@@ -1,8 +1,5 @@
-function AirChat(_platform) {
+function AirChat(_communicator) {
 	
 	
 	
 };
-AirChat.CHROME = 0;
-AirChat.CORDOVA = 1;
-AirChat.WINDOWS_PHONE = 2;

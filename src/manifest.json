@@ -4,7 +4,14 @@
 	"name": "AirChat 0.1.0 Alpha",
 	"app": {
 		"background": {
-			"scripts": ["js/main.js"]
+			"scripts": [
+				"js/AirChat.js",
+				"js/AirChatTextView.js",
+				"js/AirChatChromeView.js",
+				"js/AirChatController.js",
+				
+				"js/main.js"
+			]
 		}
 	},
 	"permissions": [{
