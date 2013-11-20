@@ -5,14 +5,11 @@
 	"app": {
 		"background": {
 			"scripts": [
-				"js/EventDispatcher.js",
-				
-				"js/ChromeCommunicator.js",
-				
 				"js/AirChat.js",
 				"js/AirChatTextView.js",
 				"js/AirChatChromeView.js",
 				"js/AirChatController.js",
+				"js/EventDispatcher.js",
 				
 				"js/main.js"
 			]
@@ -27,7 +24,9 @@
 			"udp-bind::5556",
 			"udp-send-to::5556",
 			"udp-bind::5559",
-			"udp-send-to::5559"
+			"udp-send-to::5559",
+			"udp-bind::5561",
+			"udp-send-to::5561"			
 		]
 	}],
 	"icons": { "16": "media/calculator-16.png", "128": "media/calculator-128.png" }
