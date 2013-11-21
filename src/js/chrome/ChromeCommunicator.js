@@ -1,60 +1,116 @@
 (function Communicator(_win, _chrome) {
-	var SocketReadyEvent = function SocketReadyEvent(_code) {
+	var SocketEvent = function SocketEvent(_code) {
 		this.code = _code;
 	};
 	
-	var Connection = function Connection(_myIP, _toIP, _port) {
+	var AcceptEvent = function AcceptEvent(_id, _data) {
+		this.id = _id;
+		this.data = _data;
+		this.output = null;
+	};
+	
+	var ReceivedEvent = function(_data) {
+		this.data = _data;
+	};
+	
+	var Socket = function Socket(_myIP, _type, _port) {
+		// implements the "Socket Interface"
 		this.inheritFrom = EventDispatcher;
 		this.inheritFrom();
 		delete this.inheritFrom;
 
 		var __self__ = this;
 		var _socketId = -1;
+		var _acceptId = -1;
 
 		var __constructor__ = function() {
-	  		_chrome.socket.create('udp', null, onCreate);
+	  		_chrome.socket.create(_type, null, onCreate);
 		};
 
-		var onCreate = function(createInfo){
-			_socketId = createInfo.socketId;
-			_chrome.socket.bind(
-				_socketId,
-				_myIP,
-				_port,
-				onBind
-			);
-			_chrome.socket.read(socket, 1024, onRead);
-			_chrome.socket.connect(_socketId, _toIP, _port, onConnect);
-		};
-
-		var onBind = function(result) {
-			__self__.dispatchEvent(Socket.READY, new CReadyEvent(result));
-		};
-
-		var onRead = function(readInfo) {
-			__self__.dispatchEvent(Socket.RECEIVED, readInfo);
+		var onCreate = function(info) {
+			_socketId = info.socketId;
+			
+			if (_type == Socket.TCP) {
+				_chrome.socket.listen(
+					info.socketId,
+					_myIP,
+					_port,
+					onBind
+				);
+			} else if (_type == Socket.UDP) {
+				_chrome.socket.bind(
+					info.socketId,
+					_myIP,
+					_port,
+					onBind
+				);
+			} else
+				__self__.dispatchEvent(Socket.ERROR, new SocketEvent(-1));
 		};
 		
-		var onConnect = function(result) {
+		var onBind = function(code) {
+			if (code === 0) {
+				setupReceive();
+				__self__.dispatchEvent(Socket.READY, new SocketEvent(code));
+			} else
+				__self__.dispatchEvent(Socket.ERROR, new SocketEvent(code));
+		};
 		
+		var setupReceive = function() {
+			if (_type == Socket.TCP)
+				_chrome.socket.accept(_socketId, onAccept);
+			else if (_type == Socket.UDP) {
+				_chrome.socket.recvFrom(_socketId, onReceive);
+		};
+		
+		var onAccept = function(info) {
+			_acceptId = info.socketId;
+			_chrome.socket.read(info.socketId, onRead);
+		};
+		
+		var onReceive = function(info) {
+			__self__.dispatchEvent(Socket.RECEIVED, new ReceivedEvent(info.data));
+			_chrome.socket.recvFrom(_socketId, onReceive);
+		};
+		
+		var onRead = function(result) {
+			var e = new AcceptEvent(_acceptId, result.data);
+			__self__.dispatchEvent(Socket.RECEIVED, e);
+			_chrome.socket.write(_acceptId, e.output, onWrite);
+		};
+		
+		var onWrite = function(e) {
+			_chrome.socket.destroy(_acceptId);
+			_chrome.socket.accept(_socketId, onAccept);
+		};
+		
+		var onSend = function(info) {
+			// do anything??
 		};
 
-		this.send = function(ip) {
-		
+		this.send = function(ip, data) {
+			if (_type == Socket.UDP)
+				_chrome.socket.sendTo(_socketId, data, ip, _port, onSend);
 		};
 		
 		this.destroy = function() {
-		
+			_chrome.socket.destroy(_socketId);
+			// ??
 		};
 	
 		__constructor__();
 	};
+	Socket.UDP = 'udp';
+	Socket.TCP = 'tcp';
+	// EVENTS
+	Socket.ERROR = -1;
 	Socket.READY = 0;
 	Socket.SENT = 1;
 	Socket.RECEIVED = 2;
 
 	var ChromeCommunicator = _win.ChromeCommunicator =
 	function ChromeCommunicator() {
+		// implements the "Communicator Interface"
 		this.inheritFrom = EventDispatcher;
 		this.inheritFrom();
 		delete this.inheritFrom;
@@ -75,8 +131,12 @@
 			chrome.getNetworkList(onNetworkList);
 		};
 		
-		this.createConnection = function(ip, port) {
-			return new Connection(_ip, ip, port);
+		this.getIp = function() {
+			return _ip;
+		};
+		
+		this.createSocket = function(type, port) {
+			return new Socket(_ip, type, port);
 		};
 	};
 	ChromeCommunicator.IP_NOT_FOUND = 0;
