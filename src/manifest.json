@@ -19,8 +19,8 @@
 		"socket": [
 			"udp-bind::5554",
 			"udp-send-to::5554",
-			"tcp-connect:*:5555",
-			"tcp-listen:*:5555",
+			"tcp-connect",
+			"tcp-listen",
 			"udp-bind::5556",
 			"udp-send-to::5556",
 			"udp-bind::5559",
