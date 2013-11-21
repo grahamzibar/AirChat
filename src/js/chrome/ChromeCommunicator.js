@@ -13,7 +13,7 @@
 		this.data = _data;
 	};
 	
-	var Socket = function Socket(_myIP, _type, _port) {
+	var Socket = function Socket(_myIP, _type, _port, _onready, _onerror) {
 		// implements the "Socket Interface"
 		this.inheritFrom = EventDispatcher;
 		this.inheritFrom();
@@ -44,16 +44,16 @@
 					_port,
 					onBind
 				);
-			} else
-				__self__.dispatchEvent(Socket.ERROR, new SocketEvent(-1));
+			} else if (_onerror)
+				_onerror(new SocketEvent(-1));
 		};
 		
 		var onBind = function(code) {
 			if (code === 0) {
 				setupReceive();
-				__self__.dispatchEvent(Socket.READY, new SocketEvent(code));
-			} else
-				__self__.dispatchEvent(Socket.ERROR, new SocketEvent(code));
+				_onready(new SocketEvent(code));
+			} else if (_onerror)
+				_onerror(new SocketEvent(code));
 		};
 		
 		var setupReceive = function() {
@@ -103,32 +103,23 @@
 	Socket.UDP = 'udp';
 	Socket.TCP = 'tcp';
 	// EVENTS
-	Socket.ERROR = -1;
-	Socket.READY = 0;
-	Socket.SENT = 1;
-	Socket.RECEIVED = 2;
+	Socket.SENT = 0;
+	Socket.RECEIVED = 1;
 
 	var ChromeCommunicator = _win.ChromeCommunicator =
-	function ChromeCommunicator() {
+	function ChromeCommunicator(_onready, _onerror) {
 		// implements the "Communicator Interface"
-		this.inheritFrom = EventDispatcher;
-		this.inheritFrom();
-		delete this.inheritFrom;
-
 		var __self__ = this;
 		var _ip = null;
 		
 		var onNetworkList = function(data) {
 			if (!data[0]) {
-				__self__.dispatchEvent(ChromeCommunicator.IP_NOT_FOUND);
+				if (_onerror)
+					_onerror();
 				return;
 			}
 			_ip = data[0].address;
-			__self__.dispatchEvent(ChromeCommunicator.READY,{ ip: _ip });
-		};
-		
-		this.start = function() {
-			chrome.getNetworkList(onNetworkList);
+			_onready(_ip);
 		};
 		
 		this.getIp = function() {
@@ -138,7 +129,7 @@
 		this.createSocket = function(type, port) {
 			return new Socket(_ip, type, port);
 		};
+		
+		chrome.getNetworkList(onNetworkList);
 	};
-	ChromeCommunicator.IP_NOT_FOUND = 0;
-	ChromeCommunicator.READY = 1;
 })(window, chrome);
