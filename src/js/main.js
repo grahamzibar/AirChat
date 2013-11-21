@@ -1,4 +1,4 @@
-function onLaunched() {
+function main() {
   model = new AirChat();
   view = new AirChatChromeView();
   text_output = new AirChatTextView(
@@ -15,4 +15,4 @@ function onLaunched() {
 };
 
 // Get'er done!
-chrome.app.runtime.onLaunched.addListener(onLaunched);
+chrome.app.runtime.onLaunched.addListener(main);
