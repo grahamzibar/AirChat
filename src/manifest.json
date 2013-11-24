@@ -5,6 +5,8 @@
 	"app": {
 		"background": {
 			"scripts": [
+				"js/chrome/ChromeCommunicator.js",
+				
 				"js/core/AirChat.js",
 				"js/core/AirChatTextView.js",
 				"js/chrome/AirChatChromeView.js",

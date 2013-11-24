@@ -102,7 +102,7 @@
 		__constructor__();
 	};
 	
-  Socket.UDP = 'udp';
+	Socket.UDP = 'udp';
 	Socket.TCP = 'tcp';
 	// EVENTS
 	Socket.SENT = 0;
