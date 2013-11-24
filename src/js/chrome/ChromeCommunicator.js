@@ -126,8 +126,8 @@
 			return _ip;
 		};
 		
-		this.createSocket = function(type, port, onready) {
-			return new Socket(_ip, type, port, onready);
+		this.createSocket = function(type, port) {
+			return new Socket(_ip, type, port);
 		};
 		
 		chrome.getNetworkList(onNetworkList);
