@@ -5,11 +5,11 @@
 	"app": {
 		"background": {
 			"scripts": [
-				"js/AirChat.js",
-				"js/AirChatTextView.js",
-				"js/AirChatChromeView.js",
-				"js/AirChatController.js",
-				"js/EventDispatcher.js",
+				"js/core/AirChat.js",
+				"js/core/AirChatTextView.js",
+				"js/chrome/AirChatChromeView.js",
+				"js/core/AirChatController.js",
+				"js/utils/EventDispatcher.js",
 				
 				"js/main.js"
 			]
