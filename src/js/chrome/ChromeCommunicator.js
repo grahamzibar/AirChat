@@ -13,7 +13,7 @@
 		this.data = _data;
 	};
 	
-	var Socket = function Socket(_myIP, _type, _port, _onready, _onerror) {
+	var Socket = _win.Socket = function Socket(_myIP, _type, _port, _onready, _onerror) {
 		// implements the "Socket Interface"
 		this.inheritFrom = EventDispatcher;
 		this.inheritFrom();
@@ -89,9 +89,9 @@
 			// do anything??
 		};
 
-		this.send = function(ip, data) {
+		this.send = function(ip, port, data) {
 			if (_type == Socket.UDP)
-				_chrome.socket.sendTo(_socketId, data, ip, _port, onSend);
+				_chrome.socket.sendTo(_socketId, data, ip, port, onSend);
 		};
 		
 		this.destroy = function() {
@@ -116,8 +116,9 @@
 		
 		var onNetworkList = function(data) {
 			if (!data[0]) {
-				if (_onerror)
+				if (_onerror){
 					_onerror();
+        }
 				return;
 			}
 			_ip = data[0].address;
@@ -132,6 +133,6 @@
 			return new Socket(_ip, type, port, onready);
 		};
 		
-		chrome.socket.getNetworkList(onNetworkList);
+		_chrome.socket.getNetworkList(onNetworkList);
 	};
 })(window, chrome);
