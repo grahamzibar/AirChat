@@ -11,6 +11,10 @@ var ab2str=function(buf) {
   return String.fromCharCode.apply(null, new Uint8Array(buf));
 };
 
+function onReceive(e) {
+  e.output = str2ab("HTTP/1.0 200 OK\nContent-length: " + 2 + "\nContent-type:" + "text/plain" + "\n\noi");
+}
+
 function test(){
   s1 = communicator.createSocket('udp', 5554, function(){
     s2 = communicator.createSocket('udp', 5556, function(){
@@ -19,6 +23,10 @@ function test(){
     })
   });
   
+  
+  var server  = communicator.createSocket('tcp', 8080, function() {
+    server.addEventListener(window.Socket.RECEIVED, onReceive);
+  });
 }
 
 var communicator = new window.ChromeCommunicator(test, null);
