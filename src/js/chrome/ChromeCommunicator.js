@@ -31,6 +31,7 @@
 			_socketId = info.socketId;
 			
 			if (_type == Socket.TCP) {
+				console.log('Creating TCP socket listener:', _myIP);
 				_chrome.socket.listen(
 					info.socketId,
 					_myIP,
@@ -57,6 +58,7 @@
 		};
 		
 		var setupReceive = function() {
+			console.log('setup receive');
 			if (_type == Socket.TCP)
 				_chrome.socket.accept(_socketId, onAccept);
 			else if (_type == Socket.UDP) {
@@ -66,6 +68,7 @@
 		
 		var onAccept = function(info) {
 			_acceptId = info.socketId;
+			console.log('Connection Accepted...');
 			_chrome.socket.read(info.socketId, onRead);
 		};
 		
@@ -75,12 +78,14 @@
 		};
 		
 		var onRead = function(result) {
+			console.log('Reading request.');
 			var e = new AcceptEvent(_acceptId, result.data);
 			__self__.dispatchEvent(Socket.RECEIVED, e);
 			_chrome.socket.write(_acceptId, e.output, onWrite);
 		};
 		
 		var onWrite = function(e) {
+			console.log('Reply sent');
 			_chrome.socket.destroy(_acceptId);
 			_chrome.socket.accept(_socketId, onAccept);
 		};
@@ -130,7 +135,7 @@
 		};
 		
 		this.createSocket = function(type, port, onready) {
-			return new Socket(_ip, type, port, onready);
+			return new Socket('0.0.0.0', type, port, onready);
 		};
 		
 		_chrome.socket.getNetworkList(onNetworkList);

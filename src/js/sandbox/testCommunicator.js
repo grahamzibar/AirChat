@@ -12,6 +12,7 @@ var ab2str=function(buf) {
 };
 
 function onReceive(e) {
+  console.log('are we here?');
   e.output = str2ab("HTTP/1.0 200 OK\nContent-length: " + 2 + "\nContent-type:" + "text/plain" + "\n\noi");
 }
 
