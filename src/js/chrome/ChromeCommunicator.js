@@ -120,14 +120,21 @@
 		var _ip = null;
 		
 		var onNetworkList = function(data) {
-			if (!data[0]) {
-				if (_onerror){
+			var size = data.length;
+			if (!size) {
+				if (_onerror)
 					_onerror();
-        }
 				return;
 			}
-			_ip = data[0].address;
-			_onready(_ip);
+			for (var i = 0; i < size; i++) {
+				if (data[i].indexOf('.') != -1) {
+					_ip = data[i].address;
+					_onready(_ip);
+					return;
+				}
+			}
+			if (_onerror)
+				_onerror();
 		};
 		
 		this.getIp = function() {
