@@ -28,7 +28,7 @@ window.Bonjour = function Bonjour(ip){
       });
       
       for(var i=0; i<_ipList.length; i++){
-        s.send(_ipList[i], 5556, str2ab("Bonjour! My ip is:" . ip));
+        s.send(_ipList[i], 5556, str2ab("Bonjour! My ip is:" + ip));
       }
     });
     
@@ -44,7 +44,7 @@ window.Bonjour = function Bonjour(ip){
           receivedIp = receivedEvent.data.split("Bonjour! My ip is:");
           
           if(_ipList.indexOf(receivedIp[1]) == -1){
-            send(receivedIp[1], 5554, str2ab("My ip is:". ip));
+            send(receivedIp[1], 5554, str2ab("My ip is:" + ip));
           }
         }
       });
