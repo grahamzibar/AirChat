@@ -24,7 +24,7 @@ window.Bonjour = function Bonjour(_ip) {
 		if (receivedEvent.data) {
 			receivedIp = receivedEvent.data.split("Bonjour:");
 			if (!_activeList[receivedIp]) {
-				// splice from _ipList
+				_ipList.splice(_ipList.indexOf(receivedIp), 1);
 				bonjour(receivedIp);
 			}
 			_activeList[receivedIp] = getNow();
@@ -37,7 +37,7 @@ window.Bonjour = function Bonjour(_ip) {
 		for (var ip in _activeList) {
 			var time = _activeList[ip];
 			if (now - time >= TIMEOUT)
-				// add back to _ipList
+				_ipList.push(receivedIp);
 		}
 	};
 	
