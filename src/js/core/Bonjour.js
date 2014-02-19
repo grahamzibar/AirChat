@@ -10,6 +10,7 @@ window.Bonjour = function Bonjour(_ip) {
 	var _s;
 	
 	function __constructor__() {
+		_ip = new String(_ip);
 		__self__.getIps();
 		_s = communicator.createSocket(Socket.UDP, 5554, onCreate);
 	};
@@ -73,17 +74,14 @@ window.Bonjour = function Bonjour(_ip) {
 	}
 	
 	this.getIps = function () {
-		var slicedIp = ip.split(".");
-		
-		var curBlock = parseInt(slicedIp[3]);
-		
-		for(var i=1; i<=254; i++){
-		
-		if(i!=curBlock){
-		_ipList.push(slicedIp[0] + "." + slicedIp[1] + "." + slicedIp[2] + "." + i);
+		var pivot = _ip.lastIndexOf('.') + 1;
+		var curBlock = parseInt(_ip.substr(pivot));
+		var baseIp = _ip.substring(0, pivot);
+		for (var i = 0, ipList = _ipList; i <= 255; i++) {
+			if (i != curBlock)
+				ipList.push(baseIp + i);
 		}
-		}
-	}
+	};
 	
 	getIps();
 	setReceptionist();
