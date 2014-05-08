@@ -10,6 +10,8 @@ window.Bonjour = function Bonjour(_ip) {
 	var _s;
 	
 	function __constructor__() {
+		setReceptionist();
+		
 		_ip = new String(_ip);
 		__self__.getIps();
 		_s = communicator.createSocket(Socket.UDP, 5554, onCreate);
@@ -29,6 +31,18 @@ window.Bonjour = function Bonjour(_ip) {
 				bonjour(receivedIp);
 			}
 			_activeList[receivedIp] = getNow();
+		}
+	};
+	
+	function onReceptionistCreated() {
+		_receptionist.addEventListener(window.Socket.RECEIVED, onReceptionistReceived);
+	};
+	
+	function onReceptionistReceived(receivedEvent) {
+		if (receivedEvent.data) {
+			receivedIp = receivedEvent.data.split("Bonjour! My ip is:");
+			if (_ipList.indexOf(receivedIp[1]) == -1)
+				send(receivedIp[1], 5554, str2ab("Bonjour:" + _ip));
 		}
 	};
 	
@@ -57,21 +71,8 @@ window.Bonjour = function Bonjour(_ip) {
 	};
 	
 	this.setReceptionist = function() {
-	
-	_receptionist = communicator.createSocket('udp', 5556, function(){
-	_receptionist.addEventListener(window.Socket.RECEIVED, function(receivedEvent){
-	
-	if(receivedEvent.data){
-	
-	receivedIp = receivedEvent.data.split("Bonjour! My ip is:");
-	
-	if(_ipList.indexOf(receivedIp[1]) == -1){
-	send(receivedIp[1], 5554, str2ab("Bonjour:" + _ip));
-	}
-	}
-	});
-	});    
-	}
+		_receptionist = communicator.createSocket('udp', 5556, onReceptionistCreated);
+	};
 	
 	this.getIps = function () {
 		var pivot = _ip.lastIndexOf('.') + 1;
@@ -82,10 +83,6 @@ window.Bonjour = function Bonjour(_ip) {
 				ipList.push(baseIp + i);
 		}
 	};
-	
-	getIps();
-	setReceptionist();
-	
 	
 	__constructor__();
 };
