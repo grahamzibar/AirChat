@@ -11,6 +11,8 @@ window.Bonjour = function Bonjour(_ip) {
 	
 	function __constructor__() {
 		setReceptionist();
+    
+    setTimeout(timeoutCheck, TIMEOUT); 
 		
 		_ip = new String(_ip);
 		__self__.getIps();
@@ -37,7 +39,7 @@ window.Bonjour = function Bonjour(_ip) {
 	
 	function onReceptionistReceived(receivedEvent) {
 		if (receivedEvent.data) {
-			receivedIp = receivedEvent.data.split("Bonjour! My ip is:");
+			receivedIp = receivedEvent.data.split("Bonjour:");
 			if (receivedIp = receivedIp[1]) {
 				registerIp(receivedIp)
 				send(receivedIp, 5554, str2ab("Bonjour:" + _ip));
@@ -53,6 +55,8 @@ window.Bonjour = function Bonjour(_ip) {
 			if (now - time >= TIMEOUT)
 				_ipList.push(receivedIp);
 		}
+    
+    setTimeout(timeoutCheck, TIMEOUT); 
 	};
 	
 	function getNow() {
