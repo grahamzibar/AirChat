@@ -26,11 +26,8 @@ window.Bonjour = function Bonjour(_ip) {
 		var receivedIp;
 		if (receivedEvent.data) {
 			receivedIp = receivedEvent.data.split("Bonjour:");
-			if (!_activeList[receivedIp]) {
-				_ipList.splice(_ipList.indexOf(receivedIp), 1);
-				bonjour(receivedIp);
-			}
-			_activeList[receivedIp] = getNow();
+			if (receivedIp = receivedIp[1])
+				registerIp(receivedIp);
 		}
 	};
 	
@@ -41,8 +38,10 @@ window.Bonjour = function Bonjour(_ip) {
 	function onReceptionistReceived(receivedEvent) {
 		if (receivedEvent.data) {
 			receivedIp = receivedEvent.data.split("Bonjour! My ip is:");
-			if (_ipList.indexOf(receivedIp[1]) == -1)
-				send(receivedIp[1], 5554, str2ab("Bonjour:" + _ip));
+			if (receivedIp = receivedIp[1]) {
+				registerIp(receivedIp)
+				send(receivedIp, 5554, str2ab("Bonjour:" + _ip));
+			}
 		}
 	};
 	
@@ -62,6 +61,12 @@ window.Bonjour = function Bonjour(_ip) {
 	
 	function bonjour(to) {
 		_s.send(to, 5556, str2ab("Bonjour:" + _ip));
+	};
+	
+	function registerIp(receivedIp) {
+		if (!_activeList[receivedIp])
+			_ipList.splice(_ipList.indexOf(receivedIp), 1);
+		_activeList[receivedIp] = getNow();
 	};
 	
 	this.broadcast = function() {
