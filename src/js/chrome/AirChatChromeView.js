@@ -4,7 +4,7 @@ function AirChatChromeView() {
 		view.contentWindow.console.log('Hello World?');
 	};
 	
-	this.openView = function(
+	this.openView = function() {
 		
 	};
 	
