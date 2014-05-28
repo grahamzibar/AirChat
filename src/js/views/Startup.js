@@ -15,7 +15,7 @@ if (!window.views)
 		var timer = null;
 		
 		function __constructor__() {
-			timer = setInterval(ontimeout, _model.);
+			//~ timer = setInterval(ontimeout, _model.);
 		};
 		
 		__constructor__();
