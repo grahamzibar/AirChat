@@ -42,7 +42,7 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	};
 	
 	function onReceptionistReceived(receivedEvent) {
-		console.log('Reception Received');
+		console.log('Reception Received from ', ab2str(receivedEvent.data));
 		if (receivedEvent.data) {
 			receivedIp = ab2str(receivedEvent.data).split("Bonjour:");
 			if (receivedIp = receivedIp[1]) {
