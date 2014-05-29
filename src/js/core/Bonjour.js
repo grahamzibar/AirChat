@@ -47,7 +47,7 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 			receivedIp = ab2str(receivedEvent.data).split("Bonjour:");
 			if (receivedIp = receivedIp[1]) {
 				registerIp(receivedIp)
-				send(receivedIp, 5554, str2ab("Bonjour:" + _ip));
+				_receptionist.send(receivedIp, 5554, str2ab("Bonjour:" + _ip));
 			}
 		}
 	};
