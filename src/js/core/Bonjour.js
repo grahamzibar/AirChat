@@ -10,15 +10,18 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	var _s;
 	
 	function __constructor__() {
+		console.log('constructing');
 		setReceptionist();
 		setTimeout(timeoutCheck, TIMEOUT); 
 		
 		_ip = new String(_ip);
 		getIps();
+		console.log('Creating Broadcaster');
 		_s = _communicator.createSocket(Socket.UDP, 5554, onCreate);
 	};
 	
 	function onCreate() {
+		console.log('Broadcaster Created');
 		_s.addEventListener(window.Socket.RECEIVED, onReceived);
 		broadcast();
 	};
@@ -33,6 +36,7 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	};
 	
 	function onReceptionistCreated() {
+		console.log('Receptionist created!');
 		_receptionist.addEventListener(window.Socket.RECEIVED, onReceptionistReceived);
 	};
 	
@@ -72,16 +76,18 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	};
 	
 	function broadcast() {
+		console.log('Broadcasting!!!!!!');
 		for (var i = 0; i < _ipList.length; i++)
 			bonjour(_ipList[i]);
 		setTimeout(broadcast, BROADCAST_DELAY); // perhaps we need some way to flag this?
 	};
 	
 	function setReceptionist() {
+		console.log('Creating Receptionist');
 		_receptionist = _communicator.createSocket('udp', 5556, onReceptionistCreated);
 	};
 	
-	function getIps () {
+	function getIps() {
 		var pivot = _ip.lastIndexOf('.') + 1;
 		var curBlock = parseInt(_ip.substr(pivot));
 		var baseIp = _ip.substring(0, pivot);
