@@ -1,4 +1,4 @@
-window.Bonjour = function Bonjour(_ip) {
+window.Bonjour = function Bonjour(_ip, _communicator) {
 	var __self__ = this;
 	
 	var BROADCAST_DELAY = 10000;
