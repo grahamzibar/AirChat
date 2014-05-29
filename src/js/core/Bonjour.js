@@ -27,9 +27,10 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	};
 	
 	function onReceived(receivedEvent) {
+		console.log('Broadcaster Received');
 		var receivedIp;
 		if (receivedEvent.data) {
-			receivedIp = receivedEvent.data.split("Bonjour:");
+			receivedIp = ab2str(receivedEvent.data).split("Bonjour:");
 			if (receivedIp = receivedIp[1])
 				registerIp(receivedIp);
 		}
@@ -41,8 +42,9 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	};
 	
 	function onReceptionistReceived(receivedEvent) {
+		console.log('Reception Received');
 		if (receivedEvent.data) {
-			receivedIp = receivedEvent.data.split("Bonjour:");
+			receivedIp = ab2str(receivedEvent.data).split("Bonjour:");
 			if (receivedIp = receivedIp[1]) {
 				registerIp(receivedIp)
 				send(receivedIp, 5554, str2ab("Bonjour:" + _ip));
