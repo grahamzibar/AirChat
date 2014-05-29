@@ -127,7 +127,7 @@
 				return;
 			}
 			for (var i = 0; i < size; i++) {
-				if (data[i].indexOf('.') != -1) {
+				if (data[i].address.indexOf('.') !== -1) {
 					_ip = data[i].address;
 					_onready(_ip);
 					return;

@@ -1,16 +1,16 @@
 function main() {
-  model = new AirChat();
-  view = new AirChatChromeView();
+  model = new AirChat(ChromeCommunicator);
+  //view = new AirChatChromeView();
   text_output = new AirChatTextView(
     '0.1.0 - alpha',
     'Google Chrome', 
     'An app for communicating and sharing easily over WiFi',
     'Graham Robertson & Thiago Loureiro'
   );
-  controller = new AirChatController(model, view);
+  //controller = new AirChatController(model, view);
   
   // TEST
-  view.test();
+  //view.test();
   text_output.sayHello();
 };
 
