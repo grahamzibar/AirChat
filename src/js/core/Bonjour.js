@@ -11,17 +11,16 @@ window.Bonjour = function Bonjour(_ip) {
 	
 	function __constructor__() {
 		setReceptionist();
-    
-    setTimeout(timeoutCheck, TIMEOUT); 
+		setTimeout(timeoutCheck, TIMEOUT); 
 		
 		_ip = new String(_ip);
-		__self__.getIps();
-		_s = communicator.createSocket(Socket.UDP, 5554, onCreate);
+		getIps();
+		_s = _communicator.createSocket(Socket.UDP, 5554, onCreate);
 	};
 	
 	function onCreate() {
 		_s.addEventListener(window.Socket.RECEIVED, onReceived);
-		__self__.broadcast();
+		broadcast();
 	};
 	
 	function onReceived(receivedEvent) {
@@ -55,8 +54,7 @@ window.Bonjour = function Bonjour(_ip) {
 			if (now - time >= TIMEOUT)
 				_ipList.push(receivedIp);
 		}
-    
-    setTimeout(timeoutCheck, TIMEOUT); 
+		setTimeout(timeoutCheck, TIMEOUT); 
 	};
 	
 	function getNow() {
@@ -73,17 +71,17 @@ window.Bonjour = function Bonjour(_ip) {
 		_activeList[receivedIp] = getNow();
 	};
 	
-	this.broadcast = function() {
+	function broadcast() {
 		for (var i = 0; i < _ipList.length; i++)
 			bonjour(_ipList[i]);
-		setTimeout(__self__.broadcast, BROADCAST_DELAY); // perhaps we need some way to flag this?
+		setTimeout(broadcast, BROADCAST_DELAY); // perhaps we need some way to flag this?
 	};
 	
-	this.setReceptionist = function() {
-		_receptionist = communicator.createSocket('udp', 5556, onReceptionistCreated);
+	function setReceptionist() {
+		_receptionist = _communicator.createSocket('udp', 5556, onReceptionistCreated);
 	};
 	
-	this.getIps = function () {
+	function getIps () {
 		var pivot = _ip.lastIndexOf('.') + 1;
 		var curBlock = parseInt(_ip.substr(pivot));
 		var baseIp = _ip.substring(0, pivot);
