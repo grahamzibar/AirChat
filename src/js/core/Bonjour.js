@@ -64,7 +64,7 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	};
 	
 	function getNow() {
-		return Date.now().getTime();
+		return Date.now();
 	};
 	
 	function bonjour(to) {
