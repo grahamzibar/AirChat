@@ -13,6 +13,7 @@
 				"js/core/Bonjour.js",
 				"js/chrome/AirChatChromeView.js",
 				"js/utils/EventDispatcher.js",
+				"js/utils/Binary.js",
 				"js/main.js"
 			]
 		}
