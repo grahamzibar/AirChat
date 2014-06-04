@@ -22,7 +22,7 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	
 	function onCreate() {
 		console.log('Broadcaster Created');
-		_s.addEventListener(window.Socket.RECEIVED, onReceived);
+		_s.addEventListener(window.Socket.RECEIVED, onBroadcasterReceived);
 		broadcast();
 	};
 	
