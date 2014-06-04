@@ -12,7 +12,7 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	function __constructor__() {
 		console.log('constructing');
 		setReceptionist();
-		setTimeout(timeoutCheck, TIMEOUT); 
+		setTimeout(timeoutCheck, TIMEOUT);
 		
 		_ip = new String(_ip);
 		getIps();
@@ -23,11 +23,11 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	function onCreate() {
 		console.log('Broadcaster Created');
 		_s.addEventListener(window.Socket.RECEIVED, onReceived);
-		broadcast();
+		//broadcast();
 	};
 	
 	function onBroadcasterReceived(receivedEvent) { //maybe change this name
-    console.log('Broadcaster Received from ', ab2str(receivedEvent.data));
+    		console.log('Broadcaster Received from ', ab2str(receivedEvent.data));
 		var receivedIp;
 		if (receivedEvent.data) {
 			receivedIp = ab2str(receivedEvent.data).split("Bonjour:");
@@ -98,6 +98,8 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 				ipList.push(baseIp + i);
 		}
 	};
+	
+	this.broadcast = broadcast.bind(this);
 	
 	__constructor__();
 };
