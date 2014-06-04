@@ -22,15 +22,14 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	
 	function onCreate() {
 		console.log('Broadcaster Created');
-		_s.addEventListener(window.Socket.RECEIVED, onReceived);
-		//broadcast();
+		_s.addEventListener(window.Socket.RECEIVED, onBroadcasterReceived);
+		broadcast();
 	};
 	
 	function onBroadcasterReceived(receivedEvent) { //maybe change this name
     		console.log('Broadcaster Received from ', ab2str(receivedEvent.data));
-		var receivedIp;
 		if (receivedEvent.data) {
-			receivedIp = ab2str(receivedEvent.data).split("Bonjour:");
+			var receivedIp = ab2str(receivedEvent.data).split("Bonjour:");
 			if (receivedIp = receivedIp[1])
 				registerIp(receivedIp);
 		}
