@@ -4,6 +4,7 @@ function AirChat(Communicator) {
 	delete this.inheritFrom;
 	
 	function onready(ip) {
+		console.log('here');
 		this.bonjour = new Bonjour(ip, _communicator);
 	};
 	
@@ -11,8 +12,7 @@ function AirChat(Communicator) {
 		console.log('Uh oh');
 	};
 	
-	var _communicator = this.communicator = new Communicator(onready, onerror);
-	this.bonjour;
+	var _communicator = this.communicator = new Communicator(onready.bind(this), onerror);
 };
 AirChat.CONTACTS_UPDATE = 'contacts_update';
 AirChat.MESSAGE_RECEIVED = 'message_received';
