@@ -1,20 +1,31 @@
 window.Bonjour = function Bonjour(_ip, _communicator) {
 	var __self__ = this;
+	
+	var BONJOUR = 0;
+	var SALUT = 1;
+	var BYE = 2;
+	var STILL_HERE = 3;
+	
+	var PORT = 5554;
 	var TIMEOUT = 60000;
 	
 	var _ipList = new Array();
 	var _activeList = {};
-	var _receptionist;
 	var _s;
 	
 	function __constructor__() {
 		_ip = new String(_ip);
 		calculateIps();
-		_receptionist = _communicator.createSocket('udp', 5556, onReceptionistCreated);
-		_s = _communicator.createSocket(Socket.UDP, 5554, onBroadcasterCreated);
+		_s = _communicator.createSocket(Socket.UDP, PORT, onCreated);
 	};
 	
 	// HELPERS
+	function createMessage(command) {
+		command += '|';
+		command += _ip;
+		return str2ab(command);
+	};
+	
 	function calculateIps() {
 		var pivot = _ip.lastIndexOf('.') + 1;
 		var curBlock = parseInt(_ip.substr(pivot));
@@ -31,17 +42,23 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 		_activeList[receivedIp] = getNow();
 	};
 	
+	function removeIp(ip) {
+		if (_activeList[ip]) {
+			delete _activeList[i];
+			_ipList.push(ip);
+		}
+	};
+	
 	function getNow() {
 		return Date.now();
 	};
 	
 	// API
 	function bonjour(to) {
-		_s.send(to, 5556, str2ab("Bonjour:" + _ip));
+		_s.send(to, PORT, createMessage(BONJOUR));
 	};
 	
 	function broadcast() {
-		console.log('Broadcasting!!!!!!');
 		for (var i = 0; i < _ipList.length; i++)
 			bonjour(_ipList[i]);
 	};
@@ -51,44 +68,53 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 		for (var ip in _activeList) {
 			var time = _activeList[ip];
 			if (now - time >= TIMEOUT)
-				_ipList.push(receivedIp);
+				removeIp(ip);
+			else
+				_s.send(ip, PORT, createMessage(STILL_HERE));
 		}
-		setTimeout(timeoutCheck, TIMEOUT); 
+	};
+	
+	function bye() {
+		//_s.removeEventListener();
+		for (var ip in _activeList)
+			_s.send(ip, PORT, createMessage(BYE));
 	};
 	
 	// HANDLERS
-	function onBroadcasterCreated() {
-		console.log('Broadcaster Created');
-		_s.addEventListener(window.Socket.RECEIVED, onBroadcasterReceived);
+	function onCreated() {
+		_s.addEventListener(window.Socket.RECEIVED, onReceived);
 	};
 	
-	function onBroadcasterReceived(receivedEvent) {
-    		console.log('Broadcaster Received from ', ab2str(receivedEvent.data));
+	function onReceived(receivedEvent) {
 		if (receivedEvent.data) {
-			var receivedIp = ab2str(receivedEvent.data).split("Bonjour:");
-			if (receivedIp = receivedIp[1])
-				registerIp(receivedIp);
-		}
-	};
-	
-	function onReceptionistCreated() {
-		console.log('Receptionist created!');
-		_receptionist.addEventListener(window.Socket.RECEIVED, onReceptionistReceived);
-	};
-	
-	function onReceptionistReceived(receivedEvent) {
-		console.log('Reception Received from ', ab2str(receivedEvent.data));
-		if (receivedEvent.data) {
-			var receivedIp = ab2str(receivedEvent.data).split("Bonjour:");
-			if (receivedIp = receivedIp[1]) {
-				registerIp(receivedIp);
-				_receptionist.send(receivedIp, 5554, str2ab("Bonjour:" + _ip));
+			var ip = ab2str(receivedEvent.data).split('|');
+			var command = Number(ip[0]);
+			ip = ip[1];
+			
+			switch (command) {
+				case BONJOUR;
+					registerIp(ip);
+					_s.send(ip, PORT, createMessage(SALUT));
+					break;
+				case SALUT:
+					registerIp(ip);
+					break;
+				case STILL_HERE:
+					registerIp(ip);
+					break;
+				case BYE:
+					removeIp(ip);
+					break;
+				default:
+					console.log('WTF?');
+					break;
 			}
 		}
 	};
 	
 	this.broadcast = broadcast.bind(this);
 	this.keepAlive = keepAlive.bind(this);
+	this.bye = bye.bind(this);
 	this.getActiveList = function() {
 		return _activeList;
 	};
