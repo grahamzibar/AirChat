@@ -39,7 +39,7 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	function registerIp(ip) {
 		if (!_activeList[ip])
 			_ipList.splice(_ipList.indexOf(ip), 1);
-		_activeList[ip] = getNow();
+		_activeList[ip] = Date.now();
 	};
 	
 	function removeIp(ip) {
@@ -47,10 +47,6 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 			delete _activeList[i];
 			_ipList.push(ip);
 		}
-	};
-	
-	function getNow() {
-		return Date.now();
 	};
 	
 	// API
@@ -64,7 +60,7 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	};
 	
 	function keepAlive() {
-		var now = getNow();
+		var now = Date.now();
 		for (var ip in _activeList) {
 			var time = _activeList[ip];
 			if (now - time >= TIMEOUT) {

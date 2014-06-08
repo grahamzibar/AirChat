@@ -1,18 +1,10 @@
 function main() {
-  model = new AirChat(ChromeCommunicator);
-  //view = new AirChatChromeView();
-  text_output = new AirChatTextView(
-    '0.1.0 - alpha',
-    'Google Chrome', 
-    'An app for communicating and sharing easily over WiFi',
-    'Graham Robertson & Thiago Loureiro'
-  );
-  //controller = new AirChatController(model, view);
-  
-  // TEST
-  //view.test();
-  text_output.sayHello();
+	var model = new AirChat(ChromeCommunicator);
+	var text_output = new AirChatTextView('0.1.0 - alpha', 'Google Chrome Extension');
+	var text_controller = new AirChatTextController(model, view);
+	
+	// console access, bruh
+	window.AirHub = model;
+	window.AirHubView = null;
 };
-
-// Get'er done!
 chrome.app.runtime.onLaunched.addListener(main);
