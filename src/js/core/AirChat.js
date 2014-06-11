@@ -13,16 +13,27 @@ function AirChat(Communicator) {
 	this.inheritFrom();
 	delete this.inheritFrom;
 	
+	var PORT = 5554;
+	
+	var _s;
+	
+	this.ip;
 	this.model;
 	this.bonjour;
 	this.communicator;
 	
 	function __constructor__() {
-		this.communicator = new Communicator(onready.bind(this), onerror);
+		this.communicator = new Communicator(oncommunicatorready.bind(this), onerror);
 	};
 	
-	function onready(ip) {
-		this.bonjour = new Bonjour(ip, this.communicator);
+	function oncommunicatorready(ip) {
+		this.ip = ip;
+		_s = this.communicator.createSocket(Socket.UDP, PORT, onCreated.bind(this));
+	};
+	
+	function onCreated() {
+		// BAM!
+		this.bonjour = new Bonjour(this.ip, _s);
 	};
 	
 	function onerror() {

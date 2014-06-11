@@ -1,4 +1,4 @@
-window.Bonjour = function Bonjour(_ip, _communicator) {
+window.Bonjour = function Bonjour(_ip, _s) {
 	var __self__ = this;
 	
 	var BONJOUR = 0;
@@ -12,11 +12,10 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	
 	var _ipList = new Array();
 	var _activeList = {};
-	var _s;
 	
 	function __constructor__() {
 		calculateIps(new String(_ip));
-		_s = _communicator.createSocket(Socket.UDP, PORT, onCreated);
+		_s.addEventListener(window.Socket.RECEIVED, onReceived);
 	};
 	
 	// HELPERS
@@ -77,10 +76,6 @@ window.Bonjour = function Bonjour(_ip, _communicator) {
 	};
 	
 	// HANDLERS
-	function onCreated() {
-		_s.addEventListener(window.Socket.RECEIVED, onReceived);
-	};
-	
 	function onReceived(receivedEvent) {
 		if (receivedEvent.data) {
 			var ip = Binary.ab2str(receivedEvent.data).split('|');
