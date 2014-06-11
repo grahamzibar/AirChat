@@ -1,19 +1,22 @@
 {
 	"manifest_version": 2,
 	"version": "0.1.0",
-	"name": "AirChat 0.1.0 Alpha",
+	"name": "AirHub 0.1.0 Alpha",
 	"app": {
 		"background": {
 			"scripts": [
 				"js/chrome/ChromeCommunicator.js",
 				
+				"js/core/AirChatModel.js",
 				"js/core/AirChat.js",
 				"js/core/AirChatTextView.js",
-				"js/core/AirChatController.js",
+				"js/core/AirChatTextController.js",
+				
 				"js/core/Bonjour.js",
-				"js/chrome/AirChatChromeView.js",
+				
 				"js/utils/EventDispatcher.js",
 				"js/utils/Binary.js",
+				
 				"js/main.js"
 			]
 		}

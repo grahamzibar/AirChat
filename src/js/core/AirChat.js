@@ -3,8 +3,9 @@
 	Shhh, this class is a controller.  Don't tell anyone.
 	It contains the logic for events, loops, etc.
 	
-	It also provides the interface for communicating with the model and
-	displaying messages to the console.
+	This provides the interface for console input.
+	How do ya feel?  HOW?!?!?!?!
+
 
 */
 function AirChat(Communicator) {
@@ -21,14 +22,17 @@ function AirChat(Communicator) {
 	};
 	
 	function onready(ip) {
-		this.bonjour = new Bonjour(ip, _communicator);
+		this.bonjour = new Bonjour(ip, this.communicator);
 	};
 	
 	function onerror() {
 		//
 	};
 	
-	__constructor__();
+	
+	// API
+	
+	__constructor__.call(this);
 };
 AirChat.CONTACTS_UPDATE = 'contacts_update';
 AirChat.MESSAGE_RECEIVED = 'message_received';
