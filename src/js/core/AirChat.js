@@ -34,7 +34,16 @@ function AirChat(Communicator) {
 	function onCreated() {
 		// BAM!
 		this.bonjour = new Bonjour(this.ip, _s);
+    this.bonjour.sayHello();
+    
+    setTimeout(function(){
+      var al = this.AirHub.bonjour.getActiveList();
+      this.AirHubView.appendChatBox(al[0]);
+    }, 5000);
+      
 	};
+  
+  
 	
 	function onerror() {
 		//

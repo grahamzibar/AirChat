@@ -10,6 +10,7 @@
 				"js/core/AirChatModel.js",
 				"js/core/AirChat.js",
 				"js/core/AirChatTextView.js",
+				"js/chrome/AirChatChromeView.js",
 				"js/core/AirChatTextController.js",
 				
 				"js/core/Bonjour.js",
