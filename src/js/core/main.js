@@ -6,7 +6,6 @@ function main() {
 	var text_controller = new AirChatTextController(model, text_output);
   
 	
-	// console access, bruh
 	window.AirHub = model;
 	window.AirHubView = chrome_view;
   window.AirHubView.test();
