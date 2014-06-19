@@ -1,0 +1,2 @@
+scp -r /home/gorgotron/Dropbox/AirChat/ 192.168.56.101:~/Desktop/
+scp -r /home/gorgotron/Dropbox/AirChat/ 192.168.56.102:~/Desktop/

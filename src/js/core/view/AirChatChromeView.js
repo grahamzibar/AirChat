@@ -24,7 +24,7 @@ function AirChatChromeView() {
 	
 	this.test = function() {
 		chrome.app.window.create(
-			'../index.html',
+			'../../../html/index.html',
 			
 			{
 				'bounds': {

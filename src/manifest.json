@@ -5,35 +5,27 @@
 	"app": {
 		"background": {
 			"scripts": [
-				"js/chrome/ChromeCommunicator.js",
+				"js/core/view/AirChatTextView.js",
+				"js/core/view/AirChatChromeView.js",
 				
-				"js/core/AirChatModel.js",
-				"js/core/AirChat.js",
-				"js/core/AirChatTextView.js",
-				"js/chrome/AirChatChromeView.js",
-				"js/core/AirChatTextController.js",
+				"js/core/utils/EventDispatcher.js",
+				"js/core/utils/Binary.js",
 				
-				"js/core/Bonjour.js",
+				"js/core/model/ChromeCommunicator.js",
+				"js/core/model/Bonjour.js",
+				"js/core/model/AirChatModel.js",
+				"js/core/model/AirChat.js",
 				
-				"js/utils/EventDispatcher.js",
-				"js/utils/Binary.js",
+				"js/core/controller/AirChatTextController.js",
 				
-				"js/main.js"
+				"js/core/main.js"
 			]
 		}
 	},
 	"permissions": [{
 		"socket": [
 			"udp-bind::5554",
-			"udp-send-to::5554",
-			"tcp-connect",
-			"tcp-listen",
-			"udp-bind::5556",
-			"udp-send-to::5556",
-			"udp-bind::5559",
-			"udp-send-to::5559",
-			"udp-bind::5561",
-			"udp-send-to::5561"			
+			"udp-send-to::5554"	
 		]
 	}],
 	"icons": { "16": "media/calculator-16.png", "128": "media/calculator-128.png" }
