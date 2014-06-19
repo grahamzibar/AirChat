@@ -28,19 +28,12 @@ function AirChat(Communicator) {
 	
 	function oncommunicatorready(ip) {
 		this.ip = ip;
-		_s = this.communicator.createSocket(Socket.UDP, PORT, onCreated.bind(this));
+		_s = this.communicator.createSocket(Socket.UDP, PORT, onSocketCreated.bind(this));
 	};
 	
-	function onCreated() {
-		// BAM!
+	function onSocketCreated() {
+
 		this.bonjour = new Bonjour(this.ip, _s);
-    this.bonjour.sayHello();
-    
-    setTimeout(function(){
-      var al = this.AirHub.bonjour.getActiveList();
-      this.AirHubView.appendChatBox(al[0]);
-    }, 5000);
-      
 	};
   
   

@@ -1,6 +1,6 @@
 function AirChatTextView(_version, _platform) {
 	
-	this.sayHello = function() {
+	this.about = function() {
 		var message =
 '+-----------------------------------------------------------------------------+\n\
 \n\
@@ -42,4 +42,8 @@ function AirChatTextView(_version, _platform) {
 		}
 		console.log(o);
 	};
+  
+  this.print = function(text) {
+    console.log(text);
+  }
 };
