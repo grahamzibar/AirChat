@@ -1,0 +1,1 @@
+- error log when the socket is not created
