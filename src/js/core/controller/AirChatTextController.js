@@ -20,8 +20,10 @@ function AirChatTextController(_model, _view) {
   
   this.sendMultipleRecipientsMessage = function(ips, message){
     
+    console.log(ips);
+    
     for(var ip in ips){
-      sendMessage(ip, message);
+      this.sendMessage(ips[ip], message);
     }
   };
   
@@ -35,7 +37,7 @@ function AirChatTextController(_model, _view) {
       ips.push(ip);
     }
     
-    sendMultipleRecipientsMessage(ips, message);
+    this.sendMultipleRecipientsMessage(ips, message);
   };
   
 };
