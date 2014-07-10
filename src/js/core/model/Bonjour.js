@@ -1,4 +1,6 @@
-window.Bonjour = function Bonjour(_ip, _s) {
+if (!window.model)
+	model = new Object();
+model.Bonjour = function Bonjour(_ip, _s) {
 	var __self__ = this;
 	
 	var BONJOUR = 0;

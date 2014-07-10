@@ -1,4 +1,6 @@
-function AirChatChromeView() {
+if (!window.view)
+	view = new Object();
+view.AirChatChromeView = function AirChatChromeView() {
   
 	var onWindowCreated = function(view) {
 		view.contentWindow.console.log('Hello World?');

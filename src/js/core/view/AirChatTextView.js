@@ -1,4 +1,6 @@
-function AirChatTextView(_version, _platform) {
+if (!window.view)
+	view = new Object();
+view.AirChatTextView = function AirChatTextView(_version, _platform) {
 	
 	this.sayHello = function() {
 		var message =

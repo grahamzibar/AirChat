@@ -8,7 +8,9 @@
 
 
 */
-function AirChat(Communicator) {
+if (!window.model)
+	model = new Object();
+model.AirChat = function AirChat(Communicator) {
 	this.inheritFrom = EventDispatcher;
 	this.inheritFrom();
 	delete this.inheritFrom;

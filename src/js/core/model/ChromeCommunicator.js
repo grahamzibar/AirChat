@@ -112,8 +112,10 @@
 	// EVENTS
 	Socket.SENT = 0;
 	Socket.RECEIVED = 1;
-
-	var ChromeCommunicator = _win.ChromeCommunicator =
+	
+	if (!_win.model)
+		_win.model = new Object();
+	var ChromeCommunicator = _win.model.ChromeCommunicator =
 	function ChromeCommunicator(_onready, _onerror) {
 		// implements the "Communicator Interface"
 		var __self__ = this;

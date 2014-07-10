@@ -1,6 +1,8 @@
 /* EventDispatcher */
 Function.prototype.EventDispatcher_ID = null;
-function EventDispatcher() {
+if (!window.utils)
+	utils = new Object();
+utils.EventDispatcher = function EventDispatcher() {
 	var _events = {};
 
 	this.addEventListener = function(event, callback) {

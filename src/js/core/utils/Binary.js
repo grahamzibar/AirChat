@@ -3,7 +3,9 @@
 	http://www.youtube.com/watch?v=WGoi1MSGu64
 
 */
-window.Binary = new (function Binary() {
+if (!window.utils)
+	utils = new Object();
+window.utils.Binary = new (function Binary() {
 	this.str2ab = function(str) {
 		var buf = new ArrayBuffer(str.length);
 		var bufView = new Uint8Array(buf);

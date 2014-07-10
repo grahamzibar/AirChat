@@ -5,7 +5,9 @@
 	var DOWNLOAD_PATH = '/download';
 	var CONNECT_PATH = '/connect';
 	
-	var Server = _win.Server =
+	if (!_win.model)
+		_win.model = new Object();
+	var Server = _win.model.Server =
 	function Server(_myIP, _communicator) {
 		this.inheritFrom = EventDispatcher;
 		this.inheritFrom();
