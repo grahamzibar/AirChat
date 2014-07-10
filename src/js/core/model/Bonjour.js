@@ -1,6 +1,17 @@
 if (!window.model)
 	model = new Object();
-model.Bonjour = function Bonjour(_ip, _s) {
+//model.Bonjour = function Bonjour(_ip, _s) {
+//~ BONJOUR NEEDS TO BE AN EVENT DISPATCHER AS WELL TO SEND THE RECEIVED MESSAGES TO THE CONTROLLER FOR EXAMPLE
+
+//~ this.inheritFrom = EventDispatcher;
+//~ this.inheritFrom();
+//~ delete this.inheritFrom;
+
+
+//~ AND WHEN CREATING THE CONTROLLER:
+//~ _s.addEventListener(window.Socket.RECEIVED, onReceived);
+
+window.Bonjour = function Bonjour(_ip, _s) {
 	var __self__ = this;
 	
 	var BONJOUR = 0;
