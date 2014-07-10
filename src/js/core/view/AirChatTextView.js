@@ -2,7 +2,7 @@ if (!window.view)
 	view = new Object();
 view.AirChatTextView = function AirChatTextView(_version, _platform) {
 	
-	this.sayHello = function() {
+	this.about = function() {
 		var message =
 '+-----------------------------------------------------------------------------+\n\
 \n\
@@ -24,8 +24,12 @@ view.AirChatTextView = function AirChatTextView(_version, _platform) {
 		console.log(message);
 	};
 	
-	this.printMessage = function(from, message, timestamp) {
-		console.log(from + ':', message, '\n@', timestamp);
+	this.printReceivedMessage = function(from, message, timestamp) {
+		console.log('Received - ' + from + ':', message, '\n@', new Date(timestamp).toLocaleTimeString() );
+	};
+  
+  this.printSentMessage = function(to, message, timestamp) {
+		console.log('Sent - ' + to + ':', message, '\n@', new Date(timestamp).toLocaleTimeString() );
 	};
 	
 	this.showUserDiscovered = function(ip) {
@@ -39,9 +43,18 @@ view.AirChatTextView = function AirChatTextView(_version, _platform) {
 	this.showUsers = function(ips) {
 		var o = '\nUsers Online:';
 		for (var ip in ips) {
-			o += '\n*';
+			
+      var lastPing = new Date(ips[ip]).toLocaleTimeString();
+      
+      o += '\n*';
 			o += ip;
+      o += ' ';
+      o += lastPing;
 		}
 		console.log(o);
 	};
+  
+  this.print = function(text) {
+    console.log(text);
+  }
 };
