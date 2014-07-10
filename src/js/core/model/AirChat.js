@@ -49,5 +49,5 @@ model.AirChat = function AirChat(Communicator) {
 	
 	__constructor__.call(this);
 };
-AirChat.CONTACTS_UPDATE = 'contacts_update';
-AirChat.MESSAGE_RECEIVED = 'message_received';
+model.AirChat.CONTACTS_UPDATE = 'contacts_update';
+model.AirChat.MESSAGE_RECEIVED = 'message_received';
