@@ -15,7 +15,7 @@
 	
 	var Socket = _win.Socket = function Socket(_myIP, _type, _port, _onready, _onerror) {
 		// implements the "Socket Interface"
-		this.inheritFrom = EventDispatcher;
+		this.inheritFrom = utils.EventDispatcher;
 		this.inheritFrom();
 		delete this.inheritFrom;
 

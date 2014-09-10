@@ -35,7 +35,7 @@ window.Bonjour = function Bonjour(_ip, _s) {
 	function createMessage(command) {
 		command += '|';
 		command += _ip;
-		return Binary.str2ab(command);
+		return utils.Binary.str2ab(command);
 	};
 	
 	function calculateIps(ip) {
@@ -91,7 +91,7 @@ window.Bonjour = function Bonjour(_ip, _s) {
 	// HANDLERS
 	function onReceived(receivedEvent) {
 		if (receivedEvent.data) {
-			var ip = Binary.ab2str(receivedEvent.data).split('|');
+			var ip = utils.Binary.ab2str(receivedEvent.data).split('|');
 			var command = Number(ip[0]);
 			if (ip.length > 2)
 				var message = ip[2];
@@ -135,7 +135,7 @@ window.Bonjour = function Bonjour(_ip, _s) {
 		command += _ip;
 		command += '|';
 		command += message;
-		_s.send(to, PORT, Binary.str2ab(command));
+		_s.send(to, PORT, utils.Binary.str2ab(command));
 	};
 	this.getActiveList = function() {
 		return _activeList;
