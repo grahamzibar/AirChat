@@ -36,6 +36,7 @@ model.AirChat = function AirChat(Communicator) {
 	function onSocketCreated() {
 
 		this.bonjour = new Bonjour(this.ip, _s);
+                var a = 1+1;
 	};
   
   
